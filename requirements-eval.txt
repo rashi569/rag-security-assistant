@@ -1,0 +1,4 @@
+# Only needed for eval/evaluate_real_dataset.py and train_classifier.py -
+datasets==3.0.1
+scikit-learn==1.5.2
+joblib==1.4.2

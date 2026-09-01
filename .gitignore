@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+chroma_db/
+security/ml_model.joblib
+security/transformer_model/
+*.egg-info/
+.pytest_cache/
+.DS_Store

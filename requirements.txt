@@ -1,0 +1,9 @@
+torch
+streamlit
+chromadb
+sentence-transformers
+pypdf
+google-genai
+pytest
+scikit-learn
+joblib

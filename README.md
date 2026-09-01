@@ -4,8 +4,6 @@ A document Q&A assistant that answers questions grounded in uploaded PDFs and te
 
 ## Architecture
 
-![Architecture diagram](architecture.png)
-
 ```
 User question ──┐
                  ├─→ [1] 4-layer injection scan (regex, ML, transformer, LLM)
@@ -87,19 +85,18 @@ pytest tests/ -v
 |---|---|---|---|---|
 | Regex only | 100.0% | 8.3% | 15.4% | Full test split (n=116). Highly conservative, flagging only exact known phrasings. |
 | Regex + TF-IDF/LogisticRegression | 95.7% | 75.0% | **84.1%** | Full test split (n=116). Trained via `train_classifier.py`, CPU-only, on the order of seconds. |
-| Regex + Fine-tuned DistilBERT | 95.7% | 73.3% | 83.0% | Full test split (n=116). Fine-tuned on Kaggle's free T4 GPU tier via `fine_tune_transformer.py`. |
+| Regex + Fine-tuned DistilBERT | 95.7% | 73.3% | 83.0% | Full test split (n=116). Fine-tuned on Kaggle |
 | Regex + Gemini LLM classifier | 100.0% | 30.8% | 47.1% | Partial split (n=40); Gemini API calls consume quota and were not run on the full set. |
 
 ### Reproducing these results
 
 ```bash
 pip install -r requirements-eval.txt
-python train_classifier.py                                          # trains the TF-IDF layer, seconds, CPU-only
-# The transformer is fine-tuned on Kaggle's free GPU tier; see fine_tune_transformer.py's
-# docstring for the exact setup, then copy the resulting output to security/transformer_model/
-python eval/evaluate_real_dataset.py --compare                       # regex vs. +ML vs. +transformer, side by side
-python eval/evaluate_real_dataset.py --with-llm --max-examples 40    # Gemini layer, consumes API quota
-python eval/evaluate_retrieval.py                                    # precision@k for retrieval quality
+python train_classifier.py                                          
+# The transformer is fine-tuned on Kaggle'
+python eval/evaluate_real_dataset.py --compare                       
+python eval/evaluate_real_dataset.py --with-llm --max-examples 40    
+python eval/evaluate_retrieval.py                                    
 ```
 
 ## Retrieval quality
